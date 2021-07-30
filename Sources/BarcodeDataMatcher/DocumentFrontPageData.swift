@@ -35,7 +35,8 @@ public class DocumentFrontPageData: BarcodeMatching {
         let strings: [(String,String?)] = [
             (self.firstName, data.firstName),
             (self.lastName, data.lastName),
-            (self.documentNumber, data.documentNumber)
+            (self.documentNumber, data.documentNumber),
+            (self.address, data.address)
         ]
         let stringScore: Float = try strings.reduce(0, { score, tuple in
             guard let challenge = tuple.1 else {
