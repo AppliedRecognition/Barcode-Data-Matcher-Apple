@@ -22,7 +22,7 @@ public struct DamerauLevenshtein {
             distanceMatrix[s1[s1.index(s1.startIndex, offsetBy: i)]] = 0
         }
         for i in 0..<s2.count {
-            distanceMatrix[s2[s2.index(s1.startIndex, offsetBy: i)]] = 0
+            distanceMatrix[s2[s2.index(s2.startIndex, offsetBy: i)]] = 0
         }
         var h: [[Int]] = Array(repeating: Array(repeating: 0, count: s2.count+2), count: s1.count+2)
         for i in 0...s1.count {
