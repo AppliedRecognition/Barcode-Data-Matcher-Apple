@@ -7,11 +7,21 @@
 
 import Foundation
 
+
+/// Implementation of [Damerau-Levenshtein distance](https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance) algorithm
+/// - Since: 1.0.0
 public struct DamerauLevenshtein {
     
-    private init() {        
+    private init() {
     }
     
+    /// Calculate distance between 2 strings
+    /// - Parameters:
+    ///   - s1: First string
+    ///   - s2: Second string
+    /// - Throws: `DistanceCalculationError` if the calculation fails
+    /// - Returns: Distance between the strings
+    /// - Since: 1.0.0
     public static func distance(between s1: String, and s2: String) throws -> StringDistance {
         if s1 == s2 {
             return StringDistance(steps: 0, similarity: 1)
@@ -37,7 +47,7 @@ public struct DamerauLevenshtein {
             var db: Int = 0
             for j in 1...s2.count {
                 guard let i1: Int = distanceMatrix[s2[s2.index(s2.startIndex, offsetBy: j-1)]] else {
-                    throw NSError()
+                    throw DistanceCalculationError.failedToFindDistanceInMatrix
                 }
                 let j1: Int = db
                 var cost: Int = 1
@@ -55,7 +65,21 @@ public struct DamerauLevenshtein {
     }
 }
 
+/// String distance
+/// - Since: 1.0.0
 public struct StringDistance {
+    /// Steps required to make the compared strings equal
+    /// - Since: 1.0.0
     public let steps: Int
+    /// Similarity score between the compared strings (0 = no similarity, 1 = equal strings)
+    /// - Since: 1.0.0
     public let similarity: Float
+}
+
+/// Error thrown when distance calculation fails
+/// - Since: 1.0.0
+public enum DistanceCalculationError: Error {
+    /// String distance not found in the string matrix
+    /// - Since: 1.0.0
+    case failedToFindDistanceInMatrix
 }
